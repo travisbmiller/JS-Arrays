@@ -173,23 +173,62 @@ var myGroceryList = ['chips', 'pizza', 'hotpockets', 'MtnDew', 'corndogs'];
 
   }
 
-  var addItem = function (myGroceryList, item) {
+  var capMe = function (item) {
+    var itemStr = item.split('');
+    itemStr[0] = itemStr[0].toUpperCase();
+    for (var c = 0; c < itemStr.length; c++) {
+      if (itemStr[c] === " ") {
+        itemStr[c + 1] = itemStr[c + 1].toUpperCase();
+      }
+    };
+    item = itemStr.join('')
 
+    return item;
+  }
+
+var addItem = function (myGroceryList, item) {
+
+    //loop through list and make all lowercase
+    for (var i = 0; i < myGroceryList.length; i++) {
+      myGroceryList[i] = myGroceryList[i].toLowerCase();
+    };
+
+    //Lowercase item
+    item = item.toLowerCase()
+
+    // starting with item not found
     var foundItem = false;
 
-    for (var i = 0; i < myGroceryList.length; i++) {
+    // Loop to see if item is in list
+    for (var k = 0; k < myGroceryList.length; k++) {
 
-      if(myGroceryList[i] === item) {
+      // if found change foundItme to true
+      if(myGroceryList[k] === item) {
         foundItem = true;
         break;
       }
 
     };
 
+    // cap each word in list
+    for (var indexC = 0; indexC < myGroceryList.length; indexC++) {
+      myGroceryList[indexC] = capMe(myGroceryList[indexC]);
+    };
+
+    // cap item
+    item = capMe(item);
+
+    // If Item is not Found
     if (!foundItem) {
       myGroceryList.push(item);
+    } else {
+      var newItem = prompt(item + " is already in your grocery list. Would you like to add different item? If so please enter it below");
+      if(newItem) {
+        addItem(myGroceryList, newItem);
+      }
     }
 
+    // returning myGrocery List
     return myGroceryList;
 
   }
